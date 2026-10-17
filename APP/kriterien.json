@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "project": "ArsVivendo.GLOBAL",
+    "engine_version": "1.0",
+    "last_update": "2026-10-17"
+  },
+  "master_controls_yellow": {
+    "transaction_type": {
+      "label": "Kaufen / Mieten",
+      "default": "kaufen",
+      "options": ["kaufen", "mieten"]
+    },
+    "usage_type": {
+      "label": "Objekt-Nutzung",
+      "default": "privat",
+      "options": ["privat", "gewerblich", "landwirtschaftlich"]
+    }
+  },
+  "matrix_categories_gray": {
+    "objekt_art": {
+      "id": "category-property-types",
+      "label": "Objekt Art",
+      "auto_collapse_on_blur": true,
+      "sub_categories": {
+        "haeuser": {
+          "label": "Häuser",
+          "checked_default": true,
+          "indicator_on_partial": "-",
+          "items": ["Freistehend", "Doppelhäuser", "Reihenhäuser", "Bungalows"]
+        },
+        "villen_exklusiv": {
+          "label": "Villen & Exklusive Anwesen",
+          "checked_default": true,
+          "indicator_on_partial": "-",
+          "items": ["Villen / Landhäuser", "Exklusive Anwesen", "Sonstiges"],
+          "descriptions": {
+            "Villen / Landhäuser": "Villen, Landhäuser, …",
+            "Exklusive Anwesen": "Herrenhäuser, Cortijos, Haciendas, Exclusive Fincas, oder Châteaux in Frankreich, oder Manors in England"
+          }
+        },
+        "historisches_diverse": {
+          "label": "Historisches Wohnen & Diverse",
+          "checked_default": true,
+          "indicator_on_partial": "-",
+          "items": ["Landgüter", "Herrenhäuser", "Palais", "Schlösser", "Burgen"]
+        },
+        "wohnungen": {
+          "label": "Wohnungen",
+          "checked_default": true,
+          "indicator_on_partial": "-",
+          "items": ["Wohnungen", "Penthouse", "Maisonette", "Apartments", "Residenzen"]
+        },
+        "grundstuecke": {
+          "label": "Grundstücke",
+          "checked_default": true,
+          "indicator_on_partial": "-",
+          "items": ["Grundstücke", "Gepflegt", "Brach-Land", "Erschlossen", "Teil-Erschlossen", "nicht Erschlossen"]
+        }
+      }
+    }
+  }
+},
+    "dimensionen_und_preise": {
+      "id": "category-dimensions-prices",
+      "label": "Preise & Flächen",
+      "fields": {
+        "preis_minimal": {
+          "label": "Preis von",
+          "default": 0,
+          "steps": ["Minimal (0)", "60k-300k (Schritt: 20k)", "350k-605k (Schritt: 50k)", "700k-1M (Schritt: 100k)", "1,25M", "1,5M-5M (Schritt: 0,5M)", "Unbegrenzt", "Eingabe"]
+        },
+        "preis_maximal": {
+          "label": "Preis bis",
+          "default": "unbegrenzt",
+          "steps": ["60k-300k (Schritt: 20k)", "350k-605k (Schritt: 50k)", "700k-1M (Schritt: 100k)", "1,25M", "1,5M-5M (Schritt: 0,5M)", "Unbegrenzt", "Maximal (unbegrenzt)", "Eingabe"]
+        },
+        "groesse_minimal": {
+          "label": "min. Größe m²",
+          "default": 0,
+          "steps": ["Minimal (0)", "60m²-400m² (Schritt: 20m²)", "500m²-1000m² (Schritt: 100m²)", "Unbegrenzt", "Eingabe"]
+        },
+        "groesse_maximal": {
+          "label": "max. Größe m²",
+          "default": "unbegrenzt",
+          "steps": ["Maximal (unbegrenzt)", "60m²-400m² (Schritt: 20m²)", "500m²-1000m² (Schritt: 100m²)", "Unbegrenzt", "Eingabe"]
+        }
+      }
+    },
+    "zimmer_matrix": {
+      "id": "category-rooms",
+      "label": "Zimmer",
+      "items": {
+        "schlafzimmer": {
+          "label": "Schlafzimmer",
+          "checked_default": true,
+          "type": "select",
+          "options": ["no Info", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "mehr"]
+        },
+        "baeder": {
+          "label": "Bäder",
+          "checked_default": true,
+          "type": "select",
+          "options": ["no Info", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "mehr"]
+        },
+        "kueche": {
+          "label": "Küche",
+          "checked_default": true,
+          "type": "select",
+          "options": ["no Info", "klein", "mittel", "groß", "mit Essplatz"]
+        },
+        "wohnzimmer": { "label": "Wohnzimmer", "checked_default": true, "type": "checkbox" },
+        "family_room": { "label": "Family-Room", "checked_default": true, "type": "checkbox" },
+        "esszimmer": { "label": "Esszimmer", "checked_default": true, "type": "checkbox" },
+        "spielzimmer": { "label": "Spielzimmer", "checked_default": true, "type": "checkbox", "options": ["no Info", "klein", "mittel", "groß", "mit Essplatz"] }
+      }
+    },
+    "merkmale_und_umgebung": {
+      "id": "category-features",
+      "label": "Merkmale & Gegebenheiten",
+      "items": [
+        "Klimaanlage", "Einbauschränke", "Aufzug", 
+        "Balkon/Terrasse", "Stellplatz/Garage", "Garten", 
+        "Swimmingpool", "Abstell/Kellerraum", "Barrierefrei", 
+        "Meerblick", "Seeblick", "Bergblick"
+      ],
+      "special_options": {
+        "balkon_terrasse_select": { "options": ["no Info", "Balkon", "Terrasse", "Beides"] },
+        "stellplatz_garage_select": { "options": ["no Info", "Stellplatz", "Garage", "Beides"] }
+      }
+    },
+    "zustand_und_status": {
+      "id": "category-condition-status",
+      "label": "Zustand, Status & Mehr",
+      "zustand": {
+        "label": "Zustand",
+        "checked_default": true,
+        "items": ["Gepflegt", "Neubau", "Renovierungsbedürftig"],
+        "descriptions": {
+          "Neubau": "Neubau und Erstbezug",
+          "Renovierungsbedürftig": "Renovierungsbedürftig, mit erheblichen Mängeln behaftet"
+        }
+      },
+      "status": {
+        "label": "Status",
+        "checked_default": true,
+        "items": ["Gleichgültig", "Nur Eigentum", "Vermietet", "Illegal besetzt"]
+      },
+      "energieeffizienz": {
+        "label": "Energieeffizienz",
+        "checked_default": true,
+        "items": ["Gleichgültig", "Mittel", "Hoch", "Gering"]
+      },
+      "aus_insolvenz": {
+        "label": "Aus Insolvenz",
+        "items": ["in Verwertung"]
+      },
+      "veroeffentlichung": {
+        "label": "Veröffentlichung",
+        "checked_default": true,
+        "items": ["Gleichgültig", "kleiner 49 Stunden", "in der letzten Woche", "im letzten Monat"]
+      }
+    }
+  }
+}

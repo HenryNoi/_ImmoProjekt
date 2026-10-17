@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArsVivendo.GLOBAL - Master Engine Interaktiv</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --top-bar-height: 33px;
+            --header-bg: #F9F8F6;
+            --gold-champagne: #EAD5A5;
+            --gold-dark: #815400;
+            --text-dark: #0F0F0F;
+            --border-light: #EAE5D8;
+        }
+        body { background-color: #FFFFFF; color: var(--text-dark); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; min-height: 1500px; }
+        
+        .top-bar { background-color: #392E1C; color: #FFFFFF; position: fixed; top: 0; width: 100%; height: var(--top-bar-height); display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 2px; z-index: 1000; }
+        
+        header { background-color: var(--header-bg); position: fixed; top: var(--top-bar-height); width: 100%; z-index: 900; transition: transform 0.4s ease; }
+        .header-container { display: flex; flex-direction: column; align-items: center; max-width: 1200px; margin: 0 auto; padding-top: 30px; }
+        
+        .logo-container { text-align: center; margin-bottom: 25px; font-family: 'Times New Roman', Times, serif; user-select: none; line-height: 1; }
+        .initial-a { font-size: 40px; color: var(--gold-dark); }
+        .text-rs { font-size: 34px; color: var(--gold-dark); }
+        .initial-v { font-size: 40px; color: var(--text-dark); }
+        .text-ivendo { font-size: 34px; color: var(--text-dark); }
+        .text-global { font-size: 19px; color: var(--gold-dark); letter-spacing: 2px; }
+        
+        .fade-line-thin { width: 100%; height: 1px; background: linear-gradient(to right, transparent 15%, #C0C0C0 45%, #C0C0C0 55%, transparent 85%); margin-bottom: 35px; }
+        .fade-line-thick { width: 100%; height: 4px; background: linear-gradient(to right, transparent 5%, #E2E2E2 35%, #E2E2E2 65%, transparent 95%); }
+        
+        nav { width: 100%; display: flex; justify-content: center; margin-bottom: 35px; }
+        .nav-links { display: flex; list-style: none; gap: 35px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 13px; letter-spacing: 1px; text-transform: lowercase; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--gold-dark); } /* Hover reaktiviert */
+        
+        main { padding-top: 290px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .landing-construct-row { position: relative; width: 100%; height: 320px; display: flex; align-items: center; margin-bottom: 50px; overflow: hidden; }
+        .visual-canvas-left { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .gradient-blend-mock { width: 100%; height: 100%; background: linear-gradient(to right, #F0EFEA 0%, #F5F5F5 40%, #FFFFFF 70%, #FFFFFF 100%); display: flex; align-items: center; padding-left: 5%; color: #CCCCCC; font-size: 11px; }
+        
+        .text-overlay-right { position: relative; z-index: 2; width: 100%; display: grid; grid-template-columns: 1fr 1fr; height: 100%; align-items: center; }
+        .content-column { grid-column: 2; padding-left: 40px; padding-right: 40px; text-align: left; }
+        .content-column h3 { font-size: 22px; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .content-column p { font-size: 15px; line-height: 1.6; color: #444; }
+
+        /* LINKES KRITERIEN PANEL - JETZT REAKTIVIERT ALS OVERLAY */
+        .side-kriterien-panel {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: #FFFFFF;
+            border-right: 1px solid var(--border-light);
+            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .side-kriterien-panel.open { transform: translateX(400px); }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div>Raum für die Kunst des Lebens</div>
+    </div>
+
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="logo-container">
+                <h1 class="logo-main">
+                    <span class="initial-a">A</span><span class="text-rs">RS</span><span class="initial-v">V</span><span class="text-ivendo">IVENDO</span><span class="text-global">.GLOBAL</span>
+                </h1>
+            </div>
+            <div class="fade-line-thin"></div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">home</a></li>
+                    <li><a href="#" id="kriterienTrigger">kriterien</a></li>
+                    <li><a href="#">sortierung</a></li>
+                    <li><a href="#">dienste</a></li>
+                    <li><a href="#">anzeige aufgeben</a></li>
+                    <li><a href="#">de ▾</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="fade-line-thick"></div>
+    </header>
+
+    <!-- LINKES SCHIEBE-PANEL MIT INHALT -->
+    <div class="side-kriterien-panel" id="filterPanel">
+        <div style="padding: 20px; background-color: #392E1C; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 16px; letter-spacing: 1.5px; text-transform: lowercase; color: var(--gold-champagne);">Kriterien-Filter</h3>
+            <button id="closePanelBtn" style="background: none; border: none; color: #FFFFFF; font-size: 24px; cursor: pointer;">&times;</button>
+        </div>
+        <div style="padding: 20px; overflow-y: auto; height: calc(100% - 65px);">
+            <!-- Gelber Masterbereich -->
+            <div style="background-color: #FFFDF5; border: 1px solid var(--border-light); padding: 15px; margin-bottom: 20px;">
+                <label style="display: block; font-size: 11px; text-transform: lowercase; color: var(--gold-dark); margin-bottom: 5px; font-weight: bold;">Kaufen / Mieten</label>
+                <select style="width: 100%; padding: 8px; margin-bottom: 10px;"><option>Kaufen</option><option>Mieten</option></select>
+                <label style="display: block; font-size: 11px; text-transform: lowercase; color: var(--gold-dark); margin-bottom: 5px; font-weight: bold;">Objekt-Nutzung</label>
+                <select style="width: 100%; padding: 8px;"><option>Privat</option><option>Gewerblich</option></select>
+            </div>
+            <!-- Grauer Kriterienbereich -->
+            <div style="font-size: 14px; color: #444;">
+                <p style="font-weight: bold; margin-bottom: 10px; color: var(--text-dark);">Objekt Art</p>
+                <label style="display: block; margin-bottom: 8px; background-color: #F5F5F5; padding: 6px;"><input type="checkbox" checked style="margin-right: 8px;"> Häuser</label>
+                <label style="display: block; margin-bottom: 8px; background-color: #F5F5F5; padding: 6px;"><input type="checkbox" checked style="margin-right: 8px;"> Villen & Anwesen</label>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="landing-construct-row">
+            <div class="visual-canvas-left"><div class="gradient-blend-mock"><span>[ MAP-FLUG LOOP ]</span></div></div>
+            <div class="text-overlay-right">
+                <div class="content-column">
+                    <h3>Suchen Sie Ihre Immobilie geografisch!</h3>
+                    <p>Natürlich sind Häuser am Strand teurer – und das „Billig-Schnäppchen“ entlarvt sich auf der Karte direkt neben der lauten Autobahn.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-construct-row">
+            <div class="visual-canvas-left"><div class="gradient-blend-mock"><span>[ LISTEN SLIDER LOOP ]</span></div></div>
+            <div class="text-overlay-right">
+                <div class="content-column">
+                    <h3>Systematische Listensuche</h3>
+                    <p>Es geht Ihnen vorrangig um eine systematische Suche, mit erweiterten Beschreibungen der Merkmale und Impressionen über den Bilder-Slider.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-construct-row">
+            <div class="visual-canvas-left"><div class="gradient-blend-mock"><span>[ NETZWERK LOOP ]</span></div></div>
+            <div class="text-overlay-right">
+                <div class="content-column">
+                    <h3>Professionelles Dienstleistungs-Netzwerk</h3>
+                    <p>Von fern ist oft die Sorge, welche Ansprechpartner habe ich für den Umzug und vor Ort. Wir sind konkret in unserem Netzwerk und helfen nicht nur mit Rat, sondern mit Anpacken und realen Lösungen.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const trigger = document.getElementById('kriterienTrigger');
+        const panel = document.getElementById('filterPanel');
+        const closeBtn = document.getElementById('closePanelBtn');
+
+        // Panel öffnen
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            panel.classList.toggle('open');
+        });
+
+        // Panel schließen über X
+        closeBtn.addEventListener('click', function() {
+            panel.classList.remove('open');
+        });
+
+        // Fokusverlust-Automatik: Schließen bei Klick außerhalb
+        document.addEventListener('click', function(e) {
+            if (!panel.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) {
+                panel.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
