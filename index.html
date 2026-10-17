@@ -13,9 +13,10 @@
             --gold-dark: #815400;
             --text-dark: #0F0F0F;
             --border-light: #EAE5D8;
+            --field-border: #DCD6C8; /* Hauchdünne, dezente Kante für die Felder */
         }
         
-        /* Typografie-Harmonie: Goldene Mitte mit 15px */
+        /* Typografie-Harmonie auf der goldenen Mitte (15px) */
         body, select, option, input, label, button, h3, h4 { 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
             letter-spacing: 1px;
@@ -29,7 +30,6 @@
         
         header { background-color: var(--header-bg); position: fixed; top: var(--top-bar-height); width: 100%; z-index: 900; transition: transform 0.4s; }
         .header-container { display: flex; flex-direction: column; align-items: center; max-width: 1200px; margin: 0 auto; padding-top: 30px; }
-        
         .logo-container { text-align: center; margin-bottom: 25px; font-family: 'Times New Roman', serif; line-height: 1; font-weight: normal; }
         .logo-main { font-weight: normal; font-size: 40px; color: var(--gold-dark); letter-spacing: 1px; }
         
@@ -49,7 +49,7 @@
         .content-column h3 { font-size: 22px; margin-bottom: 12px; }
         .content-column p { font-size: 15px; line-height: 1.6; color: #444; }
 
-        /* NEUES FLAT-DESIGN FÜR DAS KRITERIEN PANEL */
+        /* KRITERIEN PANEL - DIE DREI MONOLITHISCHEN FARB-BLÖCKE */
         .side-kriterien-panel {
             position: fixed; top: 0; left: -430px; width: 420px; height: 100%; background: #FFFFFF;
             border-right: none; z-index: 2000; box-shadow: none;
@@ -59,56 +59,43 @@
         
         .panel-body-content { padding: 20px; overflow-y: auto; height: calc(100% - 45px); }
         
-        /* FLACHE ZEILEN-LOGIK: Bezeichnung links, weißer Wert rechts. Keine Rahmen! */
-        .filter-row-flat {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 14px;
-            margin-bottom: 8px;
-            border-radius: 4px;
+        /* Block 1: Gelb */
+        .group-block-yellow { background-color: #FFFDF5; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        /* Block 2: Header-Hintergrundfarbe (Creme) */
+        .group-block-creme { background-color: var(--header-bg); padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        /* Block 3: Hellgrau */
+        .group-block-gray { background-color: #F5F5F5; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        
+        /* Zeilenaufteilung innerhalb der Blöcke */
+        .block-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .block-row:last-child { margin-bottom: 0; }
+        
+        .field-label { font-size: 15px; color: var(--text-dark); }
+        .group-headline { font-size: 14px; margin-bottom: 12px; font-weight: bold; color: var(--gold-dark); }
+        
+        /* Vierspaltiges Kompakt-Raster für Preise & Flächen */
+        .price-size-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+        
+        /* Weiße Felder mit schwacher, eleganter Einrahmung */
+        .white-input-field {
+            font-size: 15px; background-color: #FFFFFF; border: 1px solid var(--field-border); padding: 8px 10px;
+            border-radius: 4px; color: var(--text-dark); outline: none; cursor: pointer;
+            width: 160px; text-align: left;
         }
         
-        /* Reine Farbflächen-Zuweisung laut deiner Vorgabe */
-        .zone-yellow { background-color: #FFFDF5; }
-        .zone-gray { background-color: #F5F5F5; }
-        
-        .filter-label-left {
-            font-size: 15px;
-            color: var(--text-dark);
-            font-weight: normal;
-        }
-        
-        /* Alle Felder zwingend rein weiß und ohne Rahmen */
-        .noble-input-right {
-            font-size: 15px !important;
-            background-color: #FFFFFF !important;
-            border: none !important;
-            padding: 6px 12px;
-            border-radius: 4px;
-            color: var(--text-dark);
-            outline: none;
-            cursor: pointer;
-            min-width: 160px;
-            text-align: left;
+        /* Kompakt-Felder für das 4er-Grid */
+        .white-input-field-compact {
+            font-size: 13px; background-color: #FFFFFF; border: 1px solid var(--field-border); padding: 8px 4px;
+            border-radius: 4px; color: var(--text-dark); outline: none; cursor: pointer;
+            width: 100%; text-align: center;
         }
 
-        /* Integrierter, kleinerer Aktions-Button im Kopf-Balken */
         .mini-action-btn {
-            background: none;
-            border: 1px solid var(--gold-champagne);
-            color: var(--gold-champagne);
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            margin-right: 15px;
+            background: none; border: 1px solid var(--gold-champagne); color: var(--gold-champagne);
+            padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;
+            transition: background 0.2s, color 0.2s; margin-right: 15px;
         }
-        .mini-action-btn:hover {
-            background-color: var(--gold-champagne);
-            color: #392E1C;
-        }
+        .mini-action-btn:hover { background-color: var(--gold-champagne); color: #392E1C; }
     </style>
 </head>
 <body>
