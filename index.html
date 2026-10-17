@@ -15,9 +15,12 @@
             --border-light: #EAE5D8;
         }
         
-        /* Einheitliche Typografie-Doktrin */
+        /* Einheitliche Typografie-Doktrin mit exakter Spationierung */
         body, select, option, input, label, button, h3, h4 { 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
+            letter-spacing: 1px !important; /* Korrektur: Das edle Menü-Spacing nun auch im Panel */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         body { background-color: #FFFFFF; color: var(--text-dark); overflow-x: hidden; min-height: 1500px; }
@@ -42,7 +45,6 @@
         .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 13px; letter-spacing: 1px; text-transform: lowercase; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: color 0.2s; }
         .nav-links a:hover { color: var(--gold-dark); }
         
-        /* Reaktivierung und Fixierung der Icons */
         .nav-icon { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; }
         
         main { padding-top: 290px; width: 100%; max-width: 1200px; margin: 0 auto; }
