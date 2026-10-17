@@ -7,31 +7,31 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --top-bar-height: 35px; --header-bg: #F9F8F6; --gold-champagne: #EAD5A5;
-            --gold-dark: #815400; --text-dark: #0F0F0F; --border-light: #EAE5D8;
+            --top-bar-height: 35px;
+            --header-bg: #F9F8F6;
+            --gold-champagne: #EAD5A5;
+            --gold-dark: #815400;
+            --text-dark: #0F0F0F;
+            --border-light: #EAE5D8;
         }
+        
+        /* Typografie-Harmonie: Goldene Mitte mit 15px */
         body, select, option, input, label, button, h3, h4 { 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 1px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            letter-spacing: 1px;
+            -webkit-font-smoothing: antialiased;
         }
+        
         body { background-color: #FFFFFF; color: var(--text-dark); overflow-x: hidden; min-height: 1500px; }
         
-        /* PASSWORT SCHUTZ LAYER */
-        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #392E1C; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFF; }
-        .lock-box { background: #F9F8F6; padding: 40px; border-radius: 8px; text-align: center; color: #0F0F0F; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .lock-box input { display: block; width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #7F7F7F; border-radius: 6px; font-size: 17px; text-align: center; }
-        .lock-box button { background: #815400; color: #FFF; border: none; padding: 12px 25px; border-radius: 6px; font-size: 17px; cursor: pointer; }
-
-        /* HEADER & TOP-BAR */
         .top-bar { background-color: #392E1C; color: #FFFFFF; position: fixed; top: 0; width: 100%; height: var(--top-bar-height); display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 2px; z-index: 1000; }
         .top-bar-slogan { position: absolute; transition: opacity 0.3s, transform 0.3s; }
-        .top-bar-logo-target { font-family: 'Times New Roman', serif; opacity: 0; visibility: hidden; position: absolute; transition: opacity 0.3s; display: flex; align-items: baseline; }
-        .top-bar-logo-target span { font-size: 16px; color: var(--gold-champagne); }
         
         header { background-color: var(--header-bg); position: fixed; top: var(--top-bar-height); width: 100%; z-index: 900; transition: transform 0.4s; }
         .header-container { display: flex; flex-direction: column; align-items: center; max-width: 1200px; margin: 0 auto; padding-top: 30px; }
+        
         .logo-container { text-align: center; margin-bottom: 25px; font-family: 'Times New Roman', serif; line-height: 1; font-weight: normal; }
         .logo-main { font-weight: normal; font-size: 40px; color: var(--gold-dark); letter-spacing: 1px; }
-        .logo-main .black-text { color: var(--text-dark); }
         
         .fade-line-thin { width: 100%; height: 1px; background: linear-gradient(to right, transparent 15%, #C0C0C0 45%, #C0C0C0 55%, transparent 85%); margin-bottom: 35px; }
         .fade-line-thick { width: 100%; height: 4px; background: linear-gradient(to right, transparent 5%, #E2E2E2 35%, #E2E2E2 65%, transparent 95%); }
@@ -39,11 +39,7 @@
         nav { width: 100%; display: flex; justify-content: center; margin-bottom: 35px; }
         .nav-links { display: flex; list-style: none; gap: 35px; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 13px; letter-spacing: 1px; text-transform: lowercase; }
-
-        /* SCROLL MORPHING SCHALTUNG */
-        body.scrolled .top-bar-slogan { opacity: 0; transform: translateY(-10px); }
-        body.scrolled .top-bar-logo-target { opacity: 1; visibility: visible; }
-        body.scrolled .logo-container { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+        
         body.scrolled header { transform: translateY(-95px); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
 
         main { padding-top: 290px; width: 100%; max-width: 1200px; margin: 0 auto; }
@@ -53,58 +49,76 @@
         .content-column h3 { font-size: 22px; margin-bottom: 12px; }
         .content-column p { font-size: 15px; line-height: 1.6; color: #444; }
 
-        /* BARRIEREFREIES KRITERIEN PANEL WITH SHARP DESIGN (17PX SCHRIFT) */
+        /* NEUES FLAT-DESIGN FÜR DAS KRITERIEN PANEL */
         .side-kriterien-panel {
             position: fixed; top: 0; left: -430px; width: 420px; height: 100%; background: #FFFFFF;
-            border-right: 1px solid var(--border-light); z-index: 2000;
+            border-right: none; z-index: 2000; box-shadow: none;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); visibility: hidden;
         }
-        .side-kriterien-panel.open { transform: translateX(430px); box-shadow: 8px 0 35px rgba(0,0,0,0.18); visibility: visible; }
+        .side-kriterien-panel.open { transform: translateX(430px); box-shadow: 8px 0 35px rgba(0,0,0,0.15); visibility: visible; }
         
-        /* BARRIEREFREIE SCHRIFT UND MEHRSPALTIGKEIT (KISS) */
-        .panel-body-content { padding: 20px; overflow-y: auto; height: calc(100% - 45px); font-size: 17px; }
-        .panel-body-content label, .panel-body-content select, .panel-body-content option { font-size: 17px !important; }
+        .panel-body-content { padding: 20px; overflow-y: auto; height: calc(100% - 45px); }
         
-        .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        .grid-4-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px; }
-        
-        .noble-field { 
-            background-color: #F5F5F5; border: 1px solid #7F7F7F; border-radius: 6px; 
-            padding: 10px; width: 100%; color: var(--text-dark); outline: none; cursor: pointer;
+        /* FLACHE ZEILEN-LOGIK: Bezeichnung links, weißer Wert rechts. Keine Rahmen! */
+        .filter-row-flat {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 4px;
         }
-        .matrix-option { 
-            display: flex; align-items: center; background-color: #F5F5F5; 
-            border: 1px solid #7F7F7F; border-radius: 6px; padding: 10px; cursor: pointer; 
-        }
-        .matrix-option input { width: 18px; height: 18px; margin-right: 10px; accent-color: var(--gold-dark); }
         
-        /* PREMIUM SUBMIT BUTTON */
-        .action-submit-btn {
-            width: 100%; background-color: var(--gold-dark); color: #FFFFFF; border: none;
-            padding: 14px; border-radius: 6px; font-size: 17px; font-weight: bold;
-            letter-spacing: 1px; cursor: pointer; margin-bottom: 20px; transition: background 0.2s;
+        /* Reine Farbflächen-Zuweisung laut deiner Vorgabe */
+        .zone-yellow { background-color: #FFFDF5; }
+        .zone-gray { background-color: #F5F5F5; }
+        
+        .filter-label-left {
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: normal;
         }
-        .action-submit-btn:hover { background-color: #5c3a00; }
+        
+        /* Alle Felder zwingend rein weiß und ohne Rahmen */
+        .noble-input-right {
+            font-size: 15px !important;
+            background-color: #FFFFFF !important;
+            border: none !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: var(--text-dark);
+            outline: none;
+            cursor: pointer;
+            min-width: 160px;
+            text-align: left;
+        }
+
+        /* Integrierter, kleinerer Aktions-Button im Kopf-Balken */
+        .mini-action-btn {
+            background: none;
+            border: 1px solid var(--gold-champagne);
+            color: var(--gold-champagne);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            margin-right: 15px;
+        }
+        .mini-action-btn:hover {
+            background-color: var(--gold-champagne);
+            color: #392E1C;
+        }
     </style>
 </head>
 <body>
-
-    <!-- RECHTLICHER ZUGANGSSCHUTZ -->
-    <div id="lock-screen">
-        <div class="lock-box">
-            <h3 style="font-size: 22px; margin-bottom: 10px;">ArsVivendo.GLOBAL</h3>
-            <p style="font-size: 15px; color: #666;">Interner Entwicklungszugang</p>
-            <input type="password" id="access-code" placeholder="Zugangscode eingeben">
-            <button onclick="checkAccess()">Zugang öffnen</button>
-        </div>
-    </div>
 
     <div class="top-bar"><div class="top-bar-slogan">Raum für die Kunst des Lebens</div></div>
 
     <header id="mainHeader">
         <div class="header-container">
             <div class="logo-container">
-                <h1 class="logo-main">ARSVIVENDO<span class="black-text">VIVENDO</span>.GLOBAL</h1>
+                <h1 class="logo-main"><span class="initial-a">A</span><span class="text-rs">RS</span><span class="initial-v">V</span><span class="text-ivendo">IVENDO</span><span class="text-global">.GLOBAL</span></h1>
             </div>
             <div class="fade-line-thin"></div>
             <nav>
@@ -121,44 +135,57 @@
         <div class="fade-line-thick"></div>
     </header>
 
-    <!-- DIE NEUE SCHICKE NEUE KRITERIEN-ENGINE (BARRIEREFREI 17PX & ZWEISPALTIG) -->
+    <!-- DIE PREMIUM RE-DESIGNED KRITERIEN-ENGINE (FLACHE ZEILEN, KEINE KÄSTCHEN, WEIẞE FELDER) -->
     <div class="side-kriterien-panel" id="filterPanel">
-        <div style="padding: 0 20px; background-color: #392E1C; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; height: 45px;">
-            <h3 style="font-size: 15px; font-weight: bold; color: var(--gold-champagne);">Kriterien-Filter</h3>
-            <button id="closePanelBtn" style="background: none; border: none; color: #FFFFFF; font-size: 24px; cursor: pointer;">&times;</button>
+        <!-- Kopf-Balken mit integriertem, filigranem Button an der Unterkante -->
+        <div style="padding: 0 20px; background-color: #392E1C; color: #FFFFFF; display: flex; align-items: center; height: 45px; position: relative;">
+            <h3 style="font-size: 14px; font-weight: bold; color: var(--gold-champagne); flex-grow: 1;">Kriterien-Filter</h3>
+            
+            <!-- Dein neuer kleiner Aktions-Button: Dezent zwischen Titel und Schließen-Kreuz -->
+            <button class="mini-action-btn" onclick="closeKriterienPanel()">Ausgewählte Daten anzeigen</button>
+            
+            <button id="closePanelBtn" style="background: none; border: none; color: #FFFFFF; font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
         </div>
         
         <div class="panel-body-content">
-            <!-- DEIN NEUER AKTIONS-BUTTON GANZ OBEN -->
-            <button class="action-submit-btn" onclick="closeKriterienPanel()">Ausgewählte Daten anzeigen</button>
-
-            <!-- ZWEISPALTIGE MASTER-AUTOMATISMEN (GELB) -->
-            <div style="background-color: #FFFDF5; border: 1px solid var(--border-light); padding: 15px; border-radius: 6px; margin-bottom: 25px;">
-                <div class="grid-2-col">
-                    <div>
-                        <label style="display:block; font-size:13px; color:var(--gold-dark); margin-bottom:6px; font-weight:bold;">Kaufen / Mieten</label>
-                        <select class="noble-field"><option>Kaufen</option><option>Mieten</option></select>
-                    </div>
-                    <div>
-                        <label style="display:block; font-size:13px; color:var(--gold-dark); margin-bottom:6px; font-weight:bold;">Objekt-Nutzung</label>
-                        <select class="noble-field"><option>Privat</option><option>Gewerblich</option></select>
-                    </div>
-                </div>
+            <!-- Gelber Masterbereich: Nur gelbe Hintergrundfläche, weiße Felder, links Bezeichnung, rechts Wert -->
+            <div class="filter-row-flat zone-yellow">
+                <span class="filter-label-left">Kaufen / Mieten</span>
+                <select class="noble-input-right"><option>Kaufen</option><option>Mieten</option></select>
+            </div>
+            <div class="filter-row-flat zone-yellow" style="margin-bottom: 25px;">
+                <span class="filter-label-left">Objekt-Nutzung</span>
+                <select class="noble-input-right"><option>Privat</option><option>Gewerblich</option></select>
             </div>
             
-            <!-- VIERSPALTIGE PREIS- UND FLÄCHENZEILEN (PLATZSPAREND & SMART) -->
-            <h4 style="font-size:15px; margin-bottom:12px; font-weight:bold; color:var(--gold-dark);">Preise &amp; Flächen</h4>
-            <div class="grid-4-col">
-                <select class="noble-field"><option>Von €</option></select>
-                <select class="noble-field"><option>Bis €</option></select>
-                <select class="noble-field"><option>Min m²</option></select>
-                <select class="noble-field"><option>Max m²</option></select>
+            <!-- Grauer Kriterienbereich: Nur graue Hintergrundfläche, Bezeichnungen links, Werte rechts -->
+            <h4 style="font-size: 14px; margin-bottom: 12px; font-weight: bold; color: var(--gold-dark);">Preise &amp; Flächen</h4>
+            
+            <div class="filter-row-flat zone-gray">
+                <span class="filter-label-left">Preis von</span>
+                <select class="noble-input-right"><option>Minimal (0)</option></select>
+            </div>
+            <div class="filter-row-flat zone-gray">
+                <span class="filter-label-left">Preis bis</span>
+                <select class="noble-input-right"><option>200.000 €</option></select>
+            </div>
+            <div class="filter-row-flat zone-gray">
+                <span class="filter-label-left">min. Größe m²</span>
+                <select class="noble-input-right"><option>Minimal (0) m²</option></select>
+            </div>
+            <div class="filter-row-flat zone-gray" style="margin-bottom: 25px;">
+                <span class="filter-label-left">max. Größe m²</span>
+                <select class="noble-input-right"><option>Maximal (unbegrenzt)</option></select>
             </div>
 
-            <h4 style="font-size:15px; margin-bottom:12px; font-weight:bold; margin-top:20px; color:var(--text-dark);">Objekt Art</h4>
-            <div class="grid-2-col">
-                <label class="matrix-option"><input type="checkbox" checked>Häuser</label>
-                <label class="matrix-option"><input type="checkbox" checked>Villen</label>
+            <h4 style="font-size: 14px; margin-bottom: 12px; font-weight: bold;">Objekt Art</h4>
+            <div class="filter-row-flat zone-gray">
+                <span class="filter-label-left">Häuser</span>
+                <div class="noble-input-right" style="background: transparent !important; min-width: auto; padding-right: 0;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--gold-dark);"></div>
+            </div>
+            <div class="filter-row-flat zone-gray">
+                <span class="filter-label-left">Villen &amp; Anwesen</span>
+                <div class="noble-input-right" style="background: transparent !important; min-width: auto; padding-right: 0;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--gold-dark);"></div>
             </div>
         </div>
     </div>
@@ -173,7 +200,6 @@
     </main>
 
     <script>
-        // PASSWORT-ZONE FÜR DEN PROTOTYP DEAKTIVIERT (DIREKTER ZUGANG)
         const trigger = document.getElementById('kriterienTrigger');
         const panel = document.getElementById('filterPanel');
         const closeBtn = document.getElementById('closePanelBtn');
