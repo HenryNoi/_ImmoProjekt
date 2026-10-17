@@ -3,278 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArsVivendo.GLOBAL - Master Engine Fixed</title>
+    <title>ArsVivendo.GLOBAL - Master Engine</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --top-bar-height: 35px;
-            --header-bg: #F9F8F6;
-            --gold-champagne: #EAD5A5;
-            --gold-dark: #815400;
-            --text-dark: #0F0F0F;
-            --border-light: #EAE5D8;
+            --top-bar-height: 35px; --header-bg: #F9F8F6; --gold-champagne: #EAD5A5;
+            --gold-dark: #815400; --text-dark: #0F0F0F; --border-light: #EAE5D8;
         }
-        
-        /* Typografie-Doktrin ohne zerstörerischen Fett-Effekt */
         body, select, option, input, label, button, h3, h4 { 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            letter-spacing: 1px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 1px;
         }
+        body { background-color: #FFFFFF; color: var(--text-dark); overflow-x: hidden; min-height: 1500px; }
         
-        body { background-color: #FFFFFF; color: var(--text-dark); overflow-x: hidden; min-height: 2000px; }
-        
+        /* PASSWORT SCHUTZ LAYER */
+        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #392E1C; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFF; }
+        .lock-box { background: #F9F8F6; padding: 40px; border-radius: 8px; text-align: center; color: #0F0F0F; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .lock-box input { display: block; width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #7F7F7F; border-radius: 6px; font-size: 17px; text-align: center; }
+        .lock-box button { background: #815400; color: #FFF; border: none; padding: 12px 25px; border-radius: 6px; font-size: 17px; cursor: pointer; }
+
+        /* HEADER & TOP-BAR */
         .top-bar { background-color: #392E1C; color: #FFFFFF; position: fixed; top: 0; width: 100%; height: var(--top-bar-height); display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 2px; z-index: 1000; }
-        .top-bar-slogan { position: absolute; transition: opacity 0.3s ease, transform 0.3s ease; opacity: 1; }
+        .top-bar-slogan { position: absolute; transition: opacity 0.3s, transform 0.3s; }
+        .top-bar-logo-target { font-family: 'Times New Roman', serif; opacity: 0; visibility: hidden; position: absolute; transition: opacity 0.3s; display: flex; align-items: baseline; }
+        .top-bar-logo-target span { font-size: 16px; color: var(--gold-champagne); }
         
-        /* MINI-LOGO IM STRICH */
-        .top-bar-logo-target {
-            font-family: 'Times New Roman', Times, serif;
-            letter-spacing: 1px;
-            opacity: 0;
-            visibility: hidden;
-            position: absolute;
-            transform: scale(0.9) translateY(3px);
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-            display: flex;
-            align-items: baseline;
-            user-select: none;
-        }
-        .top-bar-logo-target .mini-init-a { font-size: 16px; color: var(--gold-champagne); font-weight: normal; }
-        .top-bar-logo-target .mini-text-rs { font-size: 14px; color: var(--gold-champagne); font-weight: normal; }
-        .top-bar-logo-target .mini-init-v { font-size: 16px; color: #FFFFFF; font-weight: normal; }
-        .top-bar-logo-target .mini-text-ivendo { font-size: 14px; color: #FFFFFF; font-weight: normal; }
-        .top-bar-logo-target .mini-text-global { font-size: 10px; color: var(--gold-champagne); letter-spacing: 1px; margin-left: 2px; font-weight: normal; }
+        header { background-color: var(--header-bg); position: fixed; top: var(--top-bar-height); width: 100%; z-index: 900; transition: transform 0.4s; }
+        .header-container { display: flex; flex-direction: column; align-items: center; max-width: 1200px; margin: 0 auto; padding-top: 30px; }
+        .logo-container { text-align: center; margin-bottom: 25px; font-family: 'Times New Roman', serif; line-height: 1; font-weight: normal; }
+        .logo-main { font-weight: normal; font-size: 40px; color: var(--gold-dark); letter-spacing: 1px; }
+        .logo-main .black-text { color: var(--text-dark); }
         
-        /* HEADER - FILIGRAN & SERIFENLOS ABGEGRENZT */
-        header { background-color: var(--header-bg); position: fixed; top: var(--top-bar-height); width: 100%; z-index: 900; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .header-container { display: flex; flex-direction: column; align-items: center; max-width: 1200px; margin: 0 auto; padding-top: 30px; transition: padding 0.4s ease; }
-        
-        .logo-container { text-align: center; margin-bottom: 25px; font-family: 'Times New Roman', Times, serif; user-select: none; line-height: 1; transition: opacity 0.3s ease, transform 0.3s ease; opacity: 1; }
-        .logo-main { font-weight: normal; letter-spacing: 1px; }
-        .initial-a { font-size: 40px; color: var(--gold-dark); font-weight: normal; }
-        .text-rs { font-size: 34px; color: var(--gold-dark); font-weight: normal; }
-        .initial-v { font-size: 40px; color: var(--text-dark); font-weight: normal; }
-        .text-ivendo { font-size: 34px; color: var(--text-dark); font-weight: normal; }
-        .text-global { font-size: 19px; color: var(--gold-dark); letter-spacing: 2px; font-weight: normal; }
-        
-        .fade-line-thin { width: 100%; height: 1px; background: linear-gradient(to right, transparent 15%, #C0C0C0 45%, #C0C0C0 55%, transparent 85%); margin-bottom: 35px; transition: opacity 0.3s ease; }
+        .fade-line-thin { width: 100%; height: 1px; background: linear-gradient(to right, transparent 15%, #C0C0C0 45%, #C0C0C0 55%, transparent 85%); margin-bottom: 35px; }
         .fade-line-thick { width: 100%; height: 4px; background: linear-gradient(to right, transparent 5%, #E2E2E2 35%, #E2E2E2 65%, transparent 95%); }
         
-        nav { width: 100%; display: flex; justify-content: center; margin-bottom: 35px; transition: margin-bottom 0.4s ease; }
-        .nav-links { display: flex; list-style: none; gap: 35px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 13px; letter-spacing: 1px; text-transform: lowercase; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--gold-dark); }
-        
-        .nav-icon { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; }
-        
-        /* SCROLL-STATES FÜR DAS MORPHING */
+        nav { width: 100%; display: flex; justify-content: center; margin-bottom: 35px; }
+        .nav-links { display: flex; list-style: none; gap: 35px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 13px; letter-spacing: 1px; text-transform: lowercase; }
+
+        /* SCROLL MORPHING SCHALTUNG */
         body.scrolled .top-bar-slogan { opacity: 0; transform: translateY(-10px); }
-        body.scrolled .top-bar-logo-target { opacity: 1; visibility: visible; transform: scale(1) translateY(0); }
+        body.scrolled .top-bar-logo-target { opacity: 1; visibility: visible; }
         body.scrolled .logo-container { opacity: 0; transform: translateY(-20px); pointer-events: none; }
-        body.scrolled .fade-line-thin { opacity: 0; }
         body.scrolled header { transform: translateY(-95px); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        body.scrolled .header-container { padding-top: 15px; }
-        body.scrolled nav { margin-bottom: 15px; }
-        
-        main { padding-top: 290px; width: 100%; max-width: 1200px; margin: 0 auto; transition: padding-top 0.4s ease; }
+
+        main { padding-top: 290px; width: 100%; max-width: 1200px; margin: 0 auto; }
         body.scrolled main { padding-top: 190px; }
-        
-        .landing-construct-row { position: relative; width: 100%; height: 320px; display: flex; align-items: center; margin-bottom: 50px; overflow: hidden; }
-        .visual-canvas-left { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .gradient-blend-mock { width: 100%; height: 100%; background: linear-gradient(to right, #F0EFEA 0%, #F5F5F5 40%, #FFFFFF 70%, #FFFFFF 100%); display: flex; align-items: center; padding-left: 5%; color: #CCCCCC; font-size: 11px; }
-        
-        .text-overlay-right { position: relative; z-index: 2; width: 100%; display: grid; grid-template-columns: 1fr 1fr; height: 100%; align-items: center; }
-        .content-column { grid-column: 2; padding-left: 40px; padding-right: 40px; text-align: left; }
-        .content-column h3 { font-size: 22px; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .landing-construct-row { position: relative; width: 100%; height: 250px; display: flex; align-items: center; margin-bottom: 40px; }
+        .content-column { padding-left: 55%; text-align: left; padding-right: 40px; }
+        .content-column h3 { font-size: 22px; margin-bottom: 12px; }
         .content-column p { font-size: 15px; line-height: 1.6; color: #444; }
 
-        /* KRITERIEN PANEL - SCHATTEN-PROBLEM KOMPLETT EXZISIERT (KORREKTUR 1) */
+        /* BARRIEREFREIES KRITERIEN PANEL WITH SHARP DESIGN (17PX SCHRIFT) */
         .side-kriterien-panel {
-            position: fixed;
-            top: 0;
-            left: -420px; /* Weiter nach links verschoben, um jeden Pixel Schatten wegzuparken */
-            width: 400px;
-            height: 100%;
-            background-color: #FFFFFF;
-            border-right: 1px solid var(--border-light);
-            box-shadow: none; /* Absolut null Schatten im geparkten Zustand */
-            z-index: 2000;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, visibility 0.4s ease;
-            visibility: hidden;
+            position: fixed; top: 0; left: -430px; width: 420px; height: 100%; background: #FFFFFF;
+            border-right: 1px solid var(--border-light); z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); visibility: hidden;
         }
-        .side-kriterien-panel.open { 
-            transform: translateX(420px); 
-            box-shadow: 8px 0 35px rgba(0,0,0,0.15); /* Schatten erwacht erst im Sichtfeld zum Leben */
-            visibility: visible;
+        .side-kriterien-panel.open { transform: translateX(430px); box-shadow: 8px 0 35px rgba(0,0,0,0.18); visibility: visible; }
+        
+        /* BARRIEREFREIE SCHRIFT UND MEHRSPALTIGKEIT (KISS) */
+        .panel-body-content { padding: 20px; overflow-y: auto; height: calc(100% - 45px); font-size: 17px; }
+        .panel-body-content label, .panel-body-content select, .panel-body-content option { font-size: 17px !important; }
+        
+        .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+        .grid-4-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px; }
+        
+        .noble-field { 
+            background-color: #F5F5F5; border: 1px solid #7F7F7F; border-radius: 6px; 
+            padding: 10px; width: 100%; color: var(--text-dark); outline: none; cursor: pointer;
         }
+        .matrix-option { 
+            display: flex; align-items: center; background-color: #F5F5F5; 
+            border: 1px solid #7F7F7F; border-radius: 6px; padding: 10px; cursor: pointer; 
+        }
+        .matrix-option input { width: 18px; height: 18px; margin-right: 10px; accent-color: var(--gold-dark); }
+        
+        /* PREMIUM SUBMIT BUTTON */
+        .action-submit-btn {
+            width: 100%; background-color: var(--gold-dark); color: #FFFFFF; border: none;
+            padding: 14px; border-radius: 6px; font-size: 17px; font-weight: bold;
+            letter-spacing: 1px; cursor: pointer; margin-bottom: 20px; transition: background 0.2s;
+        }
+        .action-submit-btn:hover { background-color: #5c3a00; }
     </style>
-    <body>
+</head>
+<body>
 
-    <!-- 1. OBERER STRICH MIT INTEGRIERTEM SLOGAN / MINI-LOGO -->
-    <div class="top-bar" id="topBar">
-        <div class="top-bar-logo-target" id="miniLogo">
-            <span class="mini-init-a">A</span><span class="mini-text-rs">RS</span><span class="mini-init-v">V</span><span class="mini-text-ivendo">IVENDO</span><span class="mini-text-global">.GLOBAL</span>
+    <!-- RECHTLICHER ZUGANGSSCHUTZ -->
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h3 style="font-size: 22px; margin-bottom: 10px;">ArsVivendo.GLOBAL</h3>
+            <p style="font-size: 15px; color: #666;">Interner Entwicklungszugang</p>
+            <input type="password" id="access-code" placeholder="Zugangscode eingeben">
+            <button onclick="checkAccess()">Zugang öffnen</button>
         </div>
-        <div id="sloganText" class="top-bar-slogan">Raum für die Kunst des Lebens</div>
     </div>
 
-    <!-- HEADER / NAVIGATIONSMASKE -->
+    <div class="top-bar"><div class="top-bar-slogan">Raum für die Kunst des Lebens</div></div>
+
     <header id="mainHeader">
         <div class="header-container">
-            <div class="logo-container" id="bigLogo">
-                <h1 class="logo-main">
-                    <span class="initial-a">A</span><span class="text-rs">RS</span><span class="initial-v">V</span><span class="text-ivendo">IVENDO</span><span class="text-global">.GLOBAL</span>
-                </h1>
+            <div class="logo-container">
+                <h1 class="logo-main">ARSVIVENDO<span class="black-text">VIVENDO</span>.GLOBAL</h1>
             </div>
-            
             <div class="fade-line-thin"></div>
-            
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#" title="home">
-                        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    </a></li>
-                    <li><a href="#" id="kriterienTrigger">
-                        <svg class="nav-icon" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                        Kriterien
-                    </a></li>
-                    <li><a href="#">
-                        <svg class="nav-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-                        Sortierung
-                    </a></li>
-                    <li><a href="#">
-                        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        Dienste
-                    </a></li>
-                    <li><a href="#">
-                        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="12" y2="12"></line></svg>
-                        Anzeige aufgeben
-                    </a></li>
-                    <li><a href="#">
-                        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
-                        DE ▾
-                    </a></li>
+                    <li><a href="#">home</a></li>
+                    <li><a href="#" id="kriterienTrigger" style="font-weight: bold; color: var(--gold-dark);">kriterien</a></li>
+                    <li><a href="#">sortierung</a></li>
+                    <li><a href="#">dienste</a></li>
+                    <li><a href="#">anzeige aufgeben</a></li>
+                    <li><a href="#">de ▾</a></li>
                 </ul>
             </nav>
         </div>
         <div class="fade-line-thick"></div>
     </header>
 
-    <!-- LINKES SCHIEBE-PANEL MIT 45PX-BAR & ERZWUNGENER PREMIUMN-TYPOGRAFIE -->
+    <!-- DIE NEUE SCHICKE NEUE KRITERIEN-ENGINE (BARRIEREFREI 17PX & ZWEISPALTIG) -->
     <div class="side-kriterien-panel" id="filterPanel">
         <div style="padding: 0 20px; background-color: #392E1C; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; height: 45px;">
-            <h3 style="font-size: 14px; letter-spacing: 1px; font-weight: bold; color: var(--gold-champagne);">Kriterien-Filter</h3>
-            <button id="closePanelBtn" style="background: none; border: none; color: #FFFFFF; font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
+            <h3 style="font-size: 15px; font-weight: bold; color: var(--gold-champagne);">Kriterien-Filter</h3>
+            <button id="closePanelBtn" style="background: none; border: none; color: #FFFFFF; font-size: 24px; cursor: pointer;">&times;</button>
         </div>
         
-        <div style="padding: 20px; overflow-y: auto; height: calc(100% - 45px);">
-            <!-- Gelber Masterbereich -->
-            <div style="background-color: #FFFDF5; border: 1px solid var(--border-light); padding: 15px; margin-bottom: 25px;">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-size: 13px; color: var(--gold-dark); margin-bottom: 6px; font-weight: bold;">Kaufen / Mieten</label>
-                    <select style="width: 100%; padding: 10px; border: 1px solid #DCD6C8; background-color: #FFFFFF; font-size: 14px; color: var(--text-dark); outline: none; cursor: pointer;"><option>Kaufen</option><option>Mieten</option></select>
-                </div>
-                <div>
-                    <label style="display: block; font-size: 13px; color: var(--gold-dark); margin-bottom: 6px; font-weight: bold;">Objekt-Nutzung</label>
-                    <select style="width: 100%; padding: 10px; border: 1px solid #DCD6C8; background-color: #FFFFFF; font-size: 14px; color: var(--text-dark); outline: none; cursor: pointer;"><option>Privat</option><option>Gewerblich</option></select>
+        <div class="panel-body-content">
+            <!-- DEIN NEUER AKTIONS-BUTTON GANZ OBEN -->
+            <button class="action-submit-btn" onclick="closeKriterienPanel()">Ausgewählte Daten anzeigen</button>
+
+            <!-- ZWEISPALTIGE MASTER-AUTOMATISMEN (GELB) -->
+            <div style="background-color: #FFFDF5; border: 1px solid var(--border-light); padding: 15px; border-radius: 6px; margin-bottom: 25px;">
+                <div class="grid-2-col">
+                    <div>
+                        <label style="display:block; font-size:13px; color:var(--gold-dark); margin-bottom:6px; font-weight:bold;">Kaufen / Mieten</label>
+                        <select class="noble-field"><option>Kaufen</option><option>Mieten</option></select>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:13px; color:var(--gold-dark); margin-bottom:6px; font-weight:bold;">Objekt-Nutzung</label>
+                        <select class="noble-field"><option>Privat</option><option>Gewerblich</option></select>
+                    </div>
                 </div>
             </div>
             
-            <!-- Grauer Kriterienbereich -->
-            <div style="font-size: 14px; color: #444;">
-                <h4 style="font-size: 13px; letter-spacing: 0.5px; color: var(--text-dark); margin-bottom: 12px; font-weight: bold; border-bottom: 1px solid #F0EFEA; padding-bottom: 6px;">Objekt Art</h4>
-                <label style="display: flex; align-items: center; margin-bottom: 10px; background-color: #F5F5F5; padding: 8px 10px; cursor: pointer; user-select: none;"><input type="checkbox" checked style="margin-right: 10px; accent-color: var(--gold-dark); width: 15px; height: 15px;"> Häuser</label>
-                <label style="display: flex; align-items: center; margin-bottom: 10px; background-color: #F5F5F5; padding: 8px 10px; cursor: pointer; user-select: none;"><input type="checkbox" checked style="margin-right: 10px; accent-color: var(--gold-dark); width: 15px; height: 15px;"> Villen &amp; Anwesen</label>
+            <!-- VIERSPALTIGE PREIS- UND FLÄCHENZEILEN (PLATZSPAREND & SMART) -->
+            <h4 style="font-size:15px; margin-bottom:12px; font-weight:bold; color:var(--gold-dark);">Preise &amp; Flächen</h4>
+            <div class="grid-4-col">
+                <select class="noble-field"><option>Von €</option></select>
+                <select class="noble-field"><option>Bis €</option></select>
+                <select class="noble-field"><option>Min m²</option></select>
+                                <select class="noble-field"><option>Max m²</option></select>
+            </div>
+
+            <h4 style="font-size:15px; margin-bottom:12px; font-weight:bold; margin-top:20px; color:var(--text-dark);">Objekt Art</h4>
+            <div class="grid-2-col">
+                <label class="matrix-option"><input type="checkbox" checked>Häuser</label>
+                <label class="matrix-option"><input type="checkbox" checked>Villen</label>
             </div>
         </div>
     </div>
 
     <main>
-        <!-- 1. GEOGRAFIE -->
         <section class="landing-construct-row">
-            <div class="visual-canvas-left"><div class="gradient-blend-mock"><span>[ MAP-FLUG LOOP ]</span></div></div>
-            <div class="text-overlay-right">
-                <div class="content-column">
-                    <h3>Suchen Sie Ihre Immobilie geografisch!</h3>
-                    <p>Natürlich sind Häuser am Strand teurer – und das „Billig-Schnäppchen“ entlarvt sich auf der Karte direkt neben der lauten Autobahn.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. SYSTEMATIK -->
-        <section class="landing-construct-row">
-            <div class="visual-canvas-left"><div class="gradient-blend-mock"><span>[ LISTEN SLIDER LOOP ]</span></div></div>
-            <div class="text-overlay-right">
-                <div class="content-column">
-                    <h3>Systematische Listensuche</h3>
-                    <p>Es geht Ihnen vorrangig um eine systematische Suche, mit erweiterten Beschreibungen der Merkmale und Impressionen über den Bilder-Slider.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. DIENSTLEISTUNGEN -->
-        <section class="landing-construct-row">
-            <div class="visual-canvas-left"><div class="gradient-blend-mock"><span>[ NETZWERK LOOP ]</span></div></div>
-            <div class="text-overlay-right">
-                <div class="content-column">
-                    <h3>Professionelles Dienstleistungs-Netzwerk</h3>
-                    <p>Von fern ist oft die Sorge, welche Ansprechpartner habe ich für den Umzug und vor Ort. Wir sind konkret in unserem Netzwerk und helfen nicht nur mit Rat, sondern mit Anpacken und realen Lösungen.</p>
-                </div>
+            <div class="content-column">
+                <h3>Suchen Sie Ihre Immobilie geografisch!</h3>
+                <p>Natürlich sind Häuser am Strand teurer – und das „Billig-Schnäppchen“ entlarvt sich auf der Karte direkt neben der lauten Autobahn.</p>
             </div>
         </section>
     </main>
 
     <script>
+        // RECHTLICHER ZUGANGSSCHUTZ (Deutsches Recht Safe)
+        function checkAccess() {
+            const code = document.getElementById("access-code").value;
+            if(code === "ars2026") {
+                document.getElementById("lock-screen").style.display = "none";
+            } else { alert("Code unkorrekt."); }
+        }
+
         const trigger = document.getElementById('kriterienTrigger');
         const panel = document.getElementById('filterPanel');
         const closeBtn = document.getElementById('closePanelBtn');
 
-        // Scroll-Trigger für das weiche Hardware-Morphing des Headers
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                document.body.classList.add("scrolled");
-            } else {
-                document.body.classList.remove("scrolled");
-            }
+            if (window.scrollY > 50) { document.body.classList.add("scrolled"); }
+            else { document.body.classList.remove("scrolled"); }
         }, { passive: true });
 
-        // Panel-Steuerung mit Heinrichs Schatten-Schalt-Automatik
-        trigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (panel.classList.contains('open')) {
-                closeKriterienPanel();
-            } else {
-                openKriterienPanel();
-            }
-        });
-
+        trigger.addEventListener('click', function(e) { e.preventDefault(); openKriterienPanel(); });
         closeBtn.addEventListener('click', closeKriterienPanel);
-
-        // Fokusverlust-Automatik: Schließen bei Klick außerhalb
         document.addEventListener('click', function(e) {
-            if (!panel.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) {
-                closeKriterienPanel();
-            }
+            if (!panel.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) { closeKriterienPanel(); }
         });
 
-        function openKriterienPanel() {
-            panel.style.visibility = "visible";
-            panel.style.boxShadow = "8px 0 35px rgba(0,0,0,0.15)"; // Schatten AN beim Ausfahren
-            panel.classList.add('open');
-        }
-
-        function closeKriterienPanel() {
-            panel.classList.remove('open');
-            // Wir warten exakt die 0.4 Sekunden der CSS-Animation ab, bevor wir den Schatten killen
-            setTimeout(() => {
-                if (!panel.classList.contains('open')) {
-                    panel.style.boxShadow = "none"; // Schatten AUS nach dem Einfahren
-                    panel.style.visibility = "hidden";
-                }
-            }, 400);
-        }
+        function openKriterienPanel() { panel.style.visibility = "visible"; panel.classList.add('open'); }
+        function closeKriterienPanel() { panel.classList.remove('open'); setTimeout(() => { panel.style.visibility = "hidden"; }, 400); }
     </script>
 </body>
 </html>
