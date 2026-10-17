@@ -13,10 +13,10 @@
             --gold-dark: #815400;
             --text-dark: #0F0F0F;
             --border-light: #EAE5D8;
-            --field-border: #DCD6C8; /* Hauchdünne, dezente Kante für die Felder */
+            --field-border: #DCD6C8;
         }
         
-        /* Typografie-Harmonie auf der goldenen Mitte (15px) */
+        /* Harmonische Premium-Typografie (Goldene Mitte 15px) */
         body, select, option, input, label, button, h3, h4 { 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
             letter-spacing: 1px;
@@ -49,7 +49,7 @@
         .content-column h3 { font-size: 22px; margin-bottom: 12px; }
         .content-column p { font-size: 15px; line-height: 1.6; color: #444; }
 
-        /* KRITERIEN PANEL - DIE DREI MONOLITHISCHEN FARB-BLÖCKE */
+        /* KRITERIEN PANEL - FLÄCHIGE ARCHITEKTUR */
         .side-kriterien-panel {
             position: fixed; top: 0; left: -430px; width: 420px; height: 100%; background: #FFFFFF;
             border-right: none; z-index: 2000; box-shadow: none;
@@ -59,37 +59,34 @@
         
         .panel-body-content { padding: 20px; overflow-y: auto; height: calc(100% - 45px); }
         
-        /* Block 1: Gelb */
+        /* Drei sauber getrennte, monolithische Farbblöcke */
         .group-block-yellow { background-color: #FFFDF5; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
-        /* Block 2: Header-Hintergrundfarbe (Creme) */
         .group-block-creme { background-color: var(--header-bg); padding: 15px; border-radius: 6px; margin-bottom: 25px; }
-        /* Block 3: Hellgrau */
         .group-block-gray { background-color: #F5F5F5; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
         
-        /* Zeilenaufteilung innerhalb der Blöcke */
-        .block-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .block-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
         .block-row:last-child { margin-bottom: 0; }
         
         .field-label { font-size: 15px; color: var(--text-dark); }
         .group-headline { font-size: 14px; margin-bottom: 12px; font-weight: bold; color: var(--gold-dark); }
         
-        /* Vierspaltiges Kompakt-Raster für Preise & Flächen */
+        /* Vierspaltiges Kompakt-Raster für Preise & Flächen im Creme-Block */
         .price-size-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
         
-        /* Weiße Felder mit schwacher, eleganter Einrahmung */
+        /* Weiße Felder mit schwacher, edler Einrahmung */
         .white-input-field {
             font-size: 15px; background-color: #FFFFFF; border: 1px solid var(--field-border); padding: 8px 10px;
             border-radius: 4px; color: var(--text-dark); outline: none; cursor: pointer;
-            width: 160px; text-align: left;
+            width: 170px; text-align: left;
         }
         
-        /* Kompakt-Felder für das 4er-Grid */
         .white-input-field-compact {
             font-size: 13px; background-color: #FFFFFF; border: 1px solid var(--field-border); padding: 8px 4px;
             border-radius: 4px; color: var(--text-dark); outline: none; cursor: pointer;
             width: 100%; text-align: center;
         }
 
+        /* Kleiner Aktions-Button im Kopf-Balken */
         .mini-action-btn {
             background: none; border: 1px solid var(--gold-champagne); color: var(--gold-champagne);
             padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;
@@ -122,61 +119,51 @@
         <div class="fade-line-thick"></div>
     </header>
 
-    <!-- DIE PREMIUM RE-DESIGNED KRITERIEN-ENGINE (FLACHE ZEILEN, KEINE KÄSTCHEN, WEIẞE FELDER) -->
     <div class="side-kriterien-panel" id="filterPanel">
-        <!-- Kopf-Balken mit integriertem, filigranem Button an der Unterkante -->
-        <div style="padding: 0 20px; background-color: #392E1C; color: #FFFFFF; display: flex; align-items: center; height: 45px; position: relative;">
+        <div style="padding: 0 20px; background-color: #392E1C; color: #FFFFFF; display: flex; align-items: center; height: 45px;">
             <h3 style="font-size: 14px; font-weight: bold; color: var(--gold-champagne); flex-grow: 1;">Kriterien-Filter</h3>
-            
-            <!-- Dein neuer kleiner Aktions-Button: Dezent zwischen Titel und Schließen-Kreuz -->
             <button class="mini-action-btn" onclick="closeKriterienPanel()">Ausgewählte Daten anzeigen</button>
-            
             <button id="closePanelBtn" style="background: none; border: none; color: #FFFFFF; font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
         </div>
         
         <div class="panel-body-content">
-            <!-- Gelber Masterbereich: Nur gelbe Hintergrundfläche, weiße Felder, links Bezeichnung, rechts Wert -->
-            <div class="filter-row-flat zone-yellow">
-                <span class="filter-label-left">Kaufen / Mieten</span>
-                <select class="noble-input-right"><option>Kaufen</option><option>Mieten</option></select>
-            </div>
-            <div class="filter-row-flat zone-yellow" style="margin-bottom: 25px;">
-                <span class="filter-label-left">Objekt-Nutzung</span>
-                <select class="noble-input-right"><option>Privat</option><option>Gewerblich</option></select>
+            <!-- Block 1: Monolithisch Gelb -->
+            <div class="group-block-yellow">
+                <div class="block-row">
+                    <span class="field-label">Kaufen / Mieten</span>
+                    <select class="white-input-field"><option>Kaufen</option><option>Mieten</option></select>
+                </div>
+                <div class="block-row">
+                    <span class="field-label">Objekt-Nutzung</span>
+                    <select class="white-input-field"><option>Privat</option><option>Gewerblich</option></select>
+                </div>
             </div>
             
-            <!-- Grauer Kriterienbereich: Nur graue Hintergrundfläche, Bezeichnungen links, Werte rechts -->
-            <h4 style="font-size: 14px; margin-bottom: 12px; font-weight: bold; color: var(--gold-dark);">Preise &amp; Flächen</h4>
-            
-            <div class="filter-row-flat zone-gray">
-                <span class="filter-label-left">Preis von</span>
-                <select class="noble-input-right"><option>Minimal (0)</option></select>
-            </div>
-            <div class="filter-row-flat zone-gray">
-                <span class="filter-label-left">Preis bis</span>
-                <select class="noble-input-right"><option>200.000 €</option></select>
-            </div>
-            <div class="filter-row-flat zone-gray">
-                <span class="filter-label-left">min. Größe m²</span>
-                <select class="noble-input-right"><option>Minimal (0) m²</option></select>
-            </div>
-            <div class="filter-row-flat zone-gray" style="margin-bottom: 25px;">
-                <span class="filter-label-left">max. Größe m²</span>
-                <select class="noble-input-right"><option>Maximal (unbegrenzt)</option></select>
+            <!-- Block 2: Monolithisch Creme (Header-Farbe) mit 4er-Grid -->
+            <div class="group-block-creme">
+                <h4 class="group-headline">Preise &amp; Flächen</h4>
+                <div class="price-size-grid-4">
+                    <select class="white-input-field-compact"><option>Von €</option></select>
+                    <select class="white-input-field-compact"><option>Bis €</option></select>
+                    <select class="white-input-field-compact"><option>Min m²</option></select>
+                    <select class="white-input-field-compact"><option>Max m²</option></select>
+                </div>
             </div>
 
-            <h4 style="font-size: 14px; margin-bottom: 12px; font-weight: bold;">Objekt Art</h4>
-            <div class="filter-row-flat zone-gray">
-                <span class="filter-label-left">Häuser</span>
-                <div class="noble-input-right" style="background: transparent !important; min-width: auto; padding-right: 0;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--gold-dark);"></div>
-            </div>
-            <div class="filter-row-flat zone-gray">
-                <span class="filter-label-left">Villen &amp; Anwesen</span>
-                <div class="noble-input-right" style="background: transparent !important; min-width: auto; padding-right: 0;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--gold-dark);"></div>
+            <!-- Block 3: Monolithisch Hellgrau -->
+            <div class="group-block-gray">
+                <h4 class="group-headline">Objekt Art</h4>
+                <div class="block-row">
+                    <span class="field-label">Häuser</span>
+                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--gold-dark);">
+                </div>
+                <div class="block-row">
+                    <span class="field-label">Villen &amp; Anwesen</span>
+                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--gold-dark);">
+                </div>
             </div>
         </div>
     </div>
-
     <main>
         <section class="landing-construct-row">
             <div class="content-column">
