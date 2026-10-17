@@ -152,7 +152,7 @@
                 <select class="noble-field"><option>Von €</option></select>
                 <select class="noble-field"><option>Bis €</option></select>
                 <select class="noble-field"><option>Min m²</option></select>
-                                <select class="noble-field"><option>Max m²</option></select>
+                <select class="noble-field"><option>Max m²</option></select>
             </div>
 
             <h4 style="font-size:15px; margin-bottom:12px; font-weight:bold; margin-top:20px; color:var(--text-dark);">Objekt Art</h4>
@@ -173,14 +173,7 @@
     </main>
 
     <script>
-        // RECHTLICHER ZUGANGSSCHUTZ (Deutsches Recht Safe)
-        function checkAccess() {
-            const code = document.getElementById("access-code").value;
-            if(code === "ars2026") {
-                document.getElementById("lock-screen").style.display = "none";
-            } else { alert("Code unkorrekt."); }
-        }
-
+        // PASSWORT-ZONE FÜR DEN PROTOTYP DEAKTIVIERT (DIREKTER ZUGANG)
         const trigger = document.getElementById('kriterienTrigger');
         const panel = document.getElementById('filterPanel');
         const closeBtn = document.getElementById('closePanelBtn');
